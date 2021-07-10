@@ -1,0 +1,50 @@
+#include <windows.h>
+#include "3dtest.h"
+
+1000 DIALOG DISCARDABLE  100, 100, 245, 171
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "BASS - 3D Test"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Channels (sample/music)",-1,5,0,110,111
+    LISTBOX         ID_LIST,10,9,100,35,LBS_NOINTEGRALHEIGHT | WS_VSCROLL
+    PUSHBUTTON      "Add ...",ID_ADD,10,49,48,12
+    PUSHBUTTON      "Remove",ID_REMOVE,62,49,48,12,WS_DISABLED
+    PUSHBUTTON      "Play",ID_PLAY,10,65,48,12,WS_DISABLED
+    PUSHBUTTON      "Stop",ID_STOP,62,65,48,12,WS_DISABLED
+    GROUPBOX        "Movement",-1,5,79,110,32
+    CONTROL         "Left",ID_LEFT,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,
+                    10,87,28,10
+    CONTROL         "Right",ID_RIGHT,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,45,87,33,10
+    CONTROL         "Front",ID_FRONT,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,80,87,32,10
+    CONTROL         "Behind",ID_BEHIND,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,10,98,38,10
+    CONTROL         "None",ID_NONE,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,
+                    80,98,33,10
+    GROUPBOX        "EAX environment",-1,5,112,110,30
+    COMBOBOX        ID_EAX,10,123,100,65,CBS_DROPDOWNLIST | WS_VSCROLL | WS_DISABLED
+    GROUPBOX        "A3D hi-freq absorbtion",-1,120,112,120,30
+    LTEXT           "on?",-1,128,120,13,8
+    CONTROL         "",ID_A3DON,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,129,129,9,8
+    SCROLLBAR       ID_A3DHF,145,125,90,9,WS_DISABLED
+    GROUPBOX        "Rolloff factor",-1,5,144,115,23
+    GROUPBOX        "Doppler factor",-1,125,144,115,23
+    SCROLLBAR       ID_ROLLOFF,15,154,95,8
+    SCROLLBAR       ID_DOPPLER,135,154,95,8
+    GROUPBOX        "",-1,120,0,120,111
+    LTEXT           "",ID_DISPLAY,125,9,109,96,SS_SUNKEN
+END
+
+// Device selector dialog
+2000 DIALOG DISCARDABLE  20, 20, 170, 60
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "BASS output device selector"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         ID_DEVLIST,5,5,160,35,LBS_NOINTEGRALHEIGHT | WS_VSCROLL|WS_TABSTOP
+    CONTROL        "low quality",ID_LOWQUAL,"Button",BS_AUTOCHECKBOX|WS_TABSTOP,10,44,60,12
+    DEFPUSHBUTTON   "OK",IDOK,100,44,60,12,WS_TABSTOP
+END

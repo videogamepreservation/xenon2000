@@ -1,0 +1,10 @@
+           BASS 0.8a
+/------=> Win9x/NT/2k <=------\
+    Audio library providing
+ WAV/user sample, MP3/WAV file
+    and user sample stream,
+  MO3/XM/IT/MOD/S3M/MTM music
+   and CD playback functions
+    with 3D/A3D/EAX support
+/-- C/C++, VB & Delphi APIs --\
+\-----------------------------/

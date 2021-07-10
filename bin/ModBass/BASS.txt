@@ -1,0 +1,605 @@
+BASS 0.8a - Copyright (c) 1999-2000 Ian Luck. All rights reserved
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Files that you should have found in the BASS "package"
+======================================================
+BASS.TXT      This file
+BASS.DLL      The BASS module
+BASS.CHM      BASS documentation
+MO3.EXE       MO3 encoder
+FILE_ID.DIZ   BBS description file
+C\            C/C++ API and samples...
+  BASS.H        BASS C/C++ header file
+  BASS.LIB      BASS import library
+  BASSTEST.EXE  BASS example program
+  BASSTEST.C    Example program source-code
+  BASSTEST.RC   Example program resource file
+  BASSTEST.H    Example program resource header file
+  CONTEST.EXE   BASS console example program
+  CONTEST.C     Console example program source-code
+  3DTEST.EXE    BASS 3D/A3D/EAX example program
+  3DTEST.C      3D example program source-code
+  3DTEST.RC     3D example program resource file
+  3DTEST.H      3D example program resource header file
+  ENGINE.WAV    3D example program test WAVE sample
+  LOADNGET.C    LoadLibrary/GetProcAddress example source-code
+  LOADNGET.RC   LoadLibrary/GetProcAddress example resource file
+  DSPTEST.C     DSP example program source-code
+  DSPTEST.RC    DSP example program resource file
+  DSPTEST.H     DSP example program resource header file
+VB\           Visual Basic API and samples...
+  README.TXT    VB notes
+  BASS.BAS      BASS Visual Basic Module file
+  BASSTEST.VBP  Example program project file
+  FRMMAIN.FRM   Main Form for BASSTEST Project
+  3DTEST.VBP    3D example program Project File
+  FRM3D.FRM     Main Form for 3D example program
+  FRM3D.FRX     VB Data file to accompany FRM3D.FRM
+DELPHI\       Delphi API and samples...
+  README.TXT    Delphi API notes
+  BASS.PAS      BASS Delphi unit
+  3DTEST\       BASS 3D/A3D/EAX example project
+    D3TEST.DPR    Project file
+    D3TEST.DOF    Project options file
+    DTMAIN.PAS    Main unit
+    DTMAIN.DFM    Main form
+    DTSELECT.PAS  Device selector unit
+    DTSELECT.DFM  Device selector form
+  BASSTEST\     BASS example project
+    BASSTEST.DPR  Project file
+    BASSTEST.DOF  Project options file
+    BTMAIN.PAS    Main unit
+    BTMAIN.DFM    Main form
+  CONTEST\      BASS console example project
+    CONTEST.DPR   Project file
+    CONTEST.DOF   Project options file
+  DSPTEST\      DSP example project
+    DSPTEST.DPR   Project file
+    DSPTEST.DOF   Project options file
+    DTMAIN.PAS    Main unit
+    DTMAIN.DFM    Main form
+  STREAMTEST\   BASS stream example project
+    STREAMTEST.DPR Project file
+    STREAMTEST.DOF Project options file
+    STMAIN.PAS    Main unit
+    STMAIN.DFM    Main form
+
+
+NOTE: The BASS ZIP should be decompressed with the directory stucture
+      maintained. This should be automatic with any Windows unZIPper,
+      but you'll have to use the '-d' option with PKUNZIP.
+
+NOTE: To run the sample EXEs, first you'll have to copy BASS.DLL into
+      the same directory as the EXEs. Or, you could put it somewhere
+      in the path (eg. the WINDOWS directory).
+
+
+What's the point?
+=================
+BASS is a sound system for use in Windows 95/98/2000/NT software. It's
+purpose is to provide powerful (yet easy to use) sample, stream, MOD
+music, and audio CD playback functions.
+
+See the documentation for descriptions of all the BASS functions. You
+will need to have Internet Explorer installed to view the documentation.
+The BASS.H file also contains brief descriptions of the BASS functions.
+You should also see the included example program source-codes for some
+examples of how to use BASS in your own programs.
+
+
+Requirements
+============
+BASS requires DirectX 3 or above, so it not only works with Windows
+95/98/2000, but also Windows NT 4.0 (with service pack 4). BASS does
+not require that a soundcard with DirectSound/DirectSound3D hardware
+accelerated drivers is installed, but it does improve performance if
+there is one. BASS also takes advantage of MMX acceleration, which
+improves the performance of the MOD music playback.
+
+
+Main Features
+=============
+* WAV samples
+- supports mono/stereo 8/16 bit samples (including compressed)
+
+* Custom samples
+- generate or load custom samples
+
+* Sample streams
+- stream any sample data in mono/stereo 8/16 bit
+
+* File streams
+- MP3 and WAV (including compressed) file streaming
+
+* MOD music
+- uses the XMPlay engine = balls-on accurate reproduction
+
+* MO3 music
+- MP3 compressed MOD music
+
+* CD audio
+- play any track with a single function call
+
+* Synchronization
+- synchronize events in your program to the music
+
+* User defined DSP functions
+- custom effects may be applied to musics and streams
+
+* 3D sound
+- play samples/streams/musics in any 3D position
+
+* Environmental Audio eXtensions (EAX)
+- enhanced 3D sound with 3D reverberations
+
+* New DirectX 7 features
+- support for new 3D algorithm and voice management features
+
+* Free!
+- you may freely use BASS in your freeware games/demos/etc...
+
+
+Samples
+=======
+BASS supports compressed and non-compressed mono/stereo 8/16 bit WAV
+samples. Samples may be loaded from a file or a memory location. When
+possible, samples are loaded into the hardware, so that they benefit
+from "hardware acceleration". Use BASS_GetInfo to see which (if any)
+sample formats are supported by the hardware.
+
+You can set the max number of simultaneous playbacks for each sample,
+and the override method to use when the max number has been reached.
+The sample rate, volume, panning and looping are adjustable for each
+playing sample.
+
+BASS also allows you to use other sample formats (ie. not only WAVs),
+by letting you generate the sample data.
+
+NOTE: DirectSound only allows complete sample looping, you can't loop
+      just a part of the sample.
+
+
+Streams
+=======
+You can play a large amount of sample data without requiring a large
+amount of memory, by using a sample stream. BASS allows streaming in
+mono/stereo and 8/16 bit. The sample rate, volume and panning are
+adjustable for each stream. Multiple sample streams can be played
+simultaneously.
+
+There are two options for streaming, either BASS streams it for you
+(MP3 and WAV formats), or you create a function to write the stream
+data. By creating your own stream writer functions, you can play any
+sample format that is not supported by BASS, by decoding the data
+into a stream.
+
+BASS can automatically stream MP3 and WAV files, from either file or
+memory. Only MPEG 1.0/2.0 layer 3 files are supported. Layers 1 and 2
+are not supported. WAV files can be compressed with any CODEC, but the
+CODEC is required to be installed on the user's computer for the WAV
+to be decoded.
+
+
+MOD Music
+=========
+BASS's MOD playback is based on the XMPlay engine. The XM/IT/MOD/S3M/MTM
+formats are supported, with FastTracker2 and ProTracker1 options also
+available for the MOD files. MODs can be loaded from a file or a memory
+location. The MOD's samples are interpolated during mixing for superior
+sound quality.
+
+The looping, ramping (click removal), volume, amplification, and panning
+seperation settings are all configurable, as is the balance and playback
+rate. Multiple MOD musics can be played simultaneously.
+
+You can synchronize events in your program to when a MOD reaches chosen
+positions, and/or to when chosen instruments are played. The number of
+synchronizers used is unlimited.
+
+
+MO3 Music
+=========
+MO3s are treated and used in exactly the same way as normal MOD musics.
+The advantage of MO3s is that they can be a lot smaller with virtually
+identical quality. Playing a MO3 does not use any more CPU power than
+playing the original MOD version does. The only difference is a longer
+load time as the samples are being decoded.
+
+MO3s are created using the provided MO3 encoder. The MO3 encoder uses
+an external MP3 encoder to compress the samples. Settings for MP3ENC,
+BLADEENC and LAME are provided.
+
+MP3ENC has a good sound quality and maintains the sound shape well, but
+it is shareware (ie. not free). BLADEENC is freeware and has a fairly
+good sound quality, but it tends to slightly shortens the samples which
+can be especially troublesome with looped samples. LAME's sound quality
+is very good, and it usually also maintains the sample shape very well
+(BEST AT SAMPLE RATES OF 32000HZ AND ABOVE). It also supports Variable
+Bit Rate (VBR) encoding, and is freeware.
+
+MP3ENC, BLADEENC and LAME are available from these websites:
+	http://www.iis.fhg.de/amm/download/mp3enc/index.html
+	http://www.bladeenc.cjb.net/
+	http://www.chat.ru/~dkutsanov/~index.htm
+
+Any other command-line MP3 encoder can also be used.
+
+Some sounds do not like MP3 compression, so MO3 also provides a lossless
+compression that will on average reduce samples to around 50% of their
+size. The rest of the MOD structure is also compressed. This all means
+that you can greatly reduce the size of MOD musics without even using
+any MP3 compression.
+
+A few tips when creating MO3s:
+* Use 16-bit samples... MP3 only works with 16-bit samples, 8-bit
+  samples are converted to 16-bit first, doubling their size. So you
+  may as well take advantage of the extra quality of 16-bit samples
+  when creating the original MOD versions.
+* Finetune the encoder settings for each sample... to get the best
+  quality to size ratio don't just use the compression level slider.
+  All samples vary in the amount that they can be compressed before
+  losing too much quality.
+* Pay particular attention to looped samples... MP3 does not maintain
+  the sample shape exactly (some encoders more than others), so a loop
+  that normally sounds correct may produce a "click" or have a gap in
+  the MP3 version. If you're using LAME, then set the sample rate to
+  32000hz or above for best results.
+
+
+CD Audio
+========
+The CD system is seperate from the other functions in BASS, it doesn't
+require DirectSound or any other special libraries to be installed.
+BASS makes playing CD audio very simple... there's nothing more to say!
+
+
+3D Sound
+========
+If you are at all familiar with DirectSound3D, then you should have no
+problem using the 3D functions of BASS. But, even if you have not used
+DS3D it shouldn't be too hard to do 3D sound, see the example source
+file 3DTEST.C for a simple example of using 3D sound in BASS.
+
+To enable 3D sound, simply use the BASS_DEVICE_3D flag with BASS_Init.
+Then use the BASS_SAMPLE_3D/BASS_MUSIC_3D flag when loading/creating a
+sample/stream/MOD music to enable 3D functionality on it.
+
+3D sound sources are mono, the left/right components are calculated by
+the 3D engine. When using a stereo sound in 3D, it is converted to mono
+during playback, which is a bit of needless processing (as well as a
+waste of memory). So your 3D sounds should be mono in the first place.
+MOD musics are automatically mixed in mono when used in 3D, but it is up
+to you to use mono samples and streams in 3D. Because 3D channels are
+mono, playing MOD musics and streams in 3D can actually require less CPU
+than in plain stereo, because less software mixing is required, assuming
+the 3D mixing is being done by the hardware.
+
+3D sounds and non-3D sounds can be played together, it's not a matter of
+all 3D or else none 3D.
+
+EAX greatly enhances the 3D sound by reverberating the sounds to mimic
+the behaviour of a real environment. There are plenty of different types
+of environment to choose from, see the EAX_ENVIRONMENT_xxx flags for a
+complete list. Presets (EAX_PRESET_xxx) are provided, but the EAX reverb
+parameters can also be fine tuned to taste. The amount of reverb applied
+to each channel can be adjusted, or as is the default, EAX can calculate
+the reverb automatically, based on the distance of the sound from the
+listener.
+
+EAX affects 3D channels only, "normal" channels are unaffected by it.
+For the EAX effects to be heard, it requires that the user's soundcard
+supports EAX, and that DirectX 5 or above is installed.
+
+To enable the A3D functions you must use the BASS_DEVICE_A3D flag with
+BASS_Init. The usage of the A3D functions require the user to have A3D
+drivers installed, otherwise BASS_Init will fail.
+
+
+Using BASS
+==========
+C/C++, Visual Basic and Delphi BASS APIs are provided, to use BASS with
+another language you'll first have to convert the header file. Or, as a
+last resort, you could use LoadLibrary and GetProcAddress.
+
+One benefit of the LoadLibrary method is that it allows you to "look"
+for the correct BASS version, because you can load and unload BASS.DLL
+at any time. This also allows those who'ld prefer not to have a seperate
+DLL to store it with the program (eg. in a resource), write it to disk,
+load it, use it, free it and delete it.
+
+The major downside, is that you have to manually import each function
+that you use, using the GetProcAddress function. But it has been made
+a lot simpler to import BASS this way by the use of the BASSDEF #define.
+Here's a small example:
+
+#define BASSDEF(f) (WINAPI *f) // define the functions as pointers
+#include "bass.h"
+...
+HINSTANCE bass=LoadLibrary("BASS.DLL"); // load BASS
+BASS_Init=GetProcAddress(bass,"BASS_Init"); // get BASS_Init
+BASS_Init(-1,44100,0,hWnd); // call BASS_Init
+
+See the LOADNGET.C file for a more complete example.
+
+There is no guarantee that all future BASS versions will be compatible
+with all previous versions, so your program should use BASS_GetVersion
+to check the version that is loaded. This also means that you should
+put BASS.DLL in the same directory as your program (not just somewhere
+in the path), to avoid the possibility of a wrong version being loaded.
+
+If you are updating your software from a previous BASS version, then
+you should check the "History" section (below), to see which (if any)
+of the functions that you are using have been affected by a change.
+
+To use BASS with Borland C++ Builder, you'll first have to create a
+Borland C++ Builder import library for it. This is done by using the
+IMPLIB tool that comes with Borland C++ Builder. Simply execute this:
+
+	IMPLIB BASSBCB.LIB BASS.DLL
+
+... and then use BASSBCB.LIB in your projects to import BASS.
+
+
+Latest Version
+==============
+The latest version of BASS can always be found at the BASS homepage:
+
+        http://www.un4seen.com/music/
+
+
+Copyright, Disclaimer, and all that other jazz
+==============================================
+The BASS library is free for non-money making use... if you are
+not charging for the software, then you can use BASS in it for
+free (a mention in the credits would be nice though!). If you
+wish to use BASS in shareware or commercial products, then see
+the next section.
+
+This software is provided "as is", without warranty of ANY KIND,
+either expressed or implied, including but not limited to the
+implied warranties of merchantability and/or fitness for a
+particular purpose. The author shall NOT be held liable for
+ANY damage to you, your computer, or to anyone or anything else,
+that may result from its use, or misuse. Basically, you use it
+at YOUR OWN RISK.
+
+Usage of BASS indicates that you agree to the above conditions.
+
+You may freely distribute the BASS package as long as NO FEE is
+charged and all the files remain INTACT AND UNMODIFIED.
+
+All trademarks and other registered names contained in the BASS
+package are the property of their respective owners.
+
+
+BASS in shareware and commercial software?
+==========================================
+BASS is available for use in your shareware and commercial software.
+The license types available are as follows:
+
+SHAREWARE: Allows the usage of BASS in an unlimited number of your
+shareware products.
+
+SINGLE COMMERCIAL: Allows the usage of BASS in a single commercial
+product.
+
+UNLIMITED COMMERCIAL: Allows the usage of BASS in an unlimited number
+of your commercial products. This license is on a per site basis. So
+if your company has two sites and both use BASS, then two licenses are
+required.
+
+In all cases there are no royalties to pay, and you can use all future
+BASS updates without further cost. One license covers one person or
+entity and is not transferable.
+
+These licenses do not allow reselling of BASS, ie. as part of another
+development library. If none of these licenses match your requirements,
+or if you have any questions about using BASS in shareware/commercial
+software, then please get in touch (email: bass@un4seen.com).
+
+Visit the BASS website for the latest pricing:
+
+        http://www.un4seen.com/music/
+
+
+History
+=======
+These are the major (and not so major) changes at each version
+stage. There are ofcourse bug fixes and other little improvements
+made along the way too! To make upgrading simpler, all functions
+affected by a change to the BASS interface are listed.
+
+0.8a - 28/2/2000
+----------------
+* Updated Delphi API and samples
+* A few fixes
+
+0.8 - 24/1/2000
+---------------
+* Improved MP3 performance on P2/K6 and above CPUs - fast!
+* User DSP functions on streams and MOD musics
+	BASS_ChannelSetDSP
+	BASS_ChannelRemoveDSP
+* DX7 voice allocation & management
+	BASS_SAMPLE_VAM (BASS_SampleLoad/Create flag)
+	BASS_VAM_xxx flags
+	BASS_SAMPLE (vam/priority members)
+* DX7 software 3D algorithm selection
+	BASS_Set3DAlgorithm
+* DirectSound interface retrieval
+	BASS_GetDSoundObject
+* Log/linear volume & panning curves
+	BASS_SetLogCurves
+* User data passed to callback functions
+	STREAMPROC - BASS_StreamCreate
+	SYNCPROC - BASS_ChannelSetSync
+* New synchronizer
+	BASS_SYNC_MUSICFX
+* New synchronizer flag
+	BASS_SYNC_MIXTIME
+* Disable synchronizers option - saves a little CPU time
+	BASS_DEVICE_NOSYNC (BASS_Init flag)
+* Hi-res floating-point CPU usage monitoring
+	BASS_GetCPU
+* Wait for playback to start when playing a CD
+	BASS_CDPlay
+* DirectSound (dsound.dll) version retrieval
+	BASS_INFO (dsver member)
+* Removed volume sliding functions (they were fairly pointless)
+	BASS_SlideVolume
+	BASS_IsSliding
+* MO3: read/write encoder settings
+* MO3: remove inst/samp/message texts now optional
+* MO3: LAME encoder settings
+
+0.7 - 3/10/1999
+---------------
+* MO3 (MP3 compressed MODs)
+* A3D functions
+	BASS_DEVICE_A3D (BASS_Init flag)
+	BASS_INFO (a3d member)
+	BASS_SetA3DResManager
+	BASS_GetA3DResManager
+	BASS_SetA3DHFAbsorbtion
+	BASS_GetA3DHFAbsorbtion
+* Music/stream immediate sample data retrieval
+	BASS_ChannelGetData
+* File stream (WAV/MP3) length retrieval
+	BASS_StreamGetLength
+	BASS_StreamGetBlockLength
+* File stream seeking
+	BASS_ChannelSetPosition
+* Mono MP3 option (lower CPU usage)
+	BASS_StreamCreateFile
+* Music length retrieval
+	BASS_MusicGetLength
+* Music name retrieval
+	BASS_MusicGetName
+* Stop notes when moving MOD music position
+	BASS_MUSIC_POSRESET (BASS_MusicLoad/BASS_MusicPlayEx flag)
+* BASS_ERROR_FREQ - invalid sample rate error code
+	BASS_SampleCreate
+	BASS_SamplePlayEx
+	BASS_SamplePlay3DEx
+	BASS_StreamCreate
+	BASS_ChannelSetAttributes
+* Delphi and VB APIs
+
+0.6a - 26/7/1999
+----------------
+* Half rate MP3 option (lower CPU usage)
+	BASS_MP3_HALFRATE
+* Loading/streaming from file offsets
+	BASS_MusicLoad
+	BASS_SampleLoad
+	BASS_StreamCreateFile
+* Global music/sample/stream volume levels
+	BASS_SetGlobalVolumes
+	BASS_GetGlobalVolumes
+* Other new function
+	BASS_SampleStop
+* New synchronizer
+	BASS_SYNC_END
+* New sample overrider
+	BASS_SAMPLE_OVER_DIST
+* LoadLibrary/GetProcAddress instructions and example
+
+0.5 - 4/7/1999
+--------------
+* Documentation!
+* File streaming (MP3 and WAV)
+	BASS_StreamCreateFile
+* Custom generated samples
+	BASS_SampleCreate
+	BASS_SampleCreateDone
+* Other new function
+	BASS_MusicSetPositionScaler
+* Renamed function
+	BASS_ChannelClearSync -> BASS_ChannelRemoveSync
+* Alterations made to
+	BASS_ChannelGetPosition
+	BASS_SampleLoad
+	BASS_StreamPlay
+
+0.4 - 30/3/1999
+---------------
+* Compressed WAV samples support (using audio CODECs)
+* Updated CD volume handling - now works with SB Live
+* More linear channel volume/pan scales (were slightly off before)
+* "no sound" device option
+* 3D sound functions
+	BASS_Set3DFactors
+	BASS_Get3DFactors
+	BASS_Set3DPosition
+	BASS_Get3DPosition
+	BASS_Apply3D
+	BASS_SamplePlay3D
+	BASS_SamplePlay3DEx
+	BASS_ChannelSet3DAttributes
+	BASS_ChannelGet3DAttributes
+	BASS_ChannelSet3DPosition
+	BASS_ChannelGet3DPosition
+* EAX functions
+	BASS_SetEAXParameters
+	BASS_GetEAXParameters
+	BASS_ChannelSetEAXMix
+	BASS_ChannelGetEAXMix
+* Other new functions
+	BASS_GetDeviceDescription
+	BASS_SetBufferLen
+	BASS_ChannelGetFlags
+	BASS_ChannelPause
+	BASS_ChannelResume
+	BASS_ChannelSetPosition
+* Replaced function
+	BASS_CDResume -> BASS_ChannelResume
+* Alterations made to
+	BASS_Init
+	BASS_CDInit
+	BASS_SampleLoad
+	BASS_StreamPlay
+	BASS_INFO structure
+	BASS_SAMPLE structure
+	BASS_DEVICE_xxx flags
+	BASS_SAMPLE_xxx flags
+
+0.3 - 8/3/1999
+--------------
+* Synchronization functions
+	BASS_ChannelSetSync
+	BASS_ChannelClearSync
+* Other new functions
+	BASS_GetVersion
+	BASS_ChannelGetPosition
+	BASS_ChannelGetLevel
+	BASS_ChannelGetAttributes
+	BASS_ChannelSetAttributes
+* Replaced functions
+	BASS_MusicStop -> BASS_ChannelStop
+	BASS_MusicSetVolume -> BASS_ChannelSetAttributes
+	BASS_CDStop -> BASS_ChannelStop
+	BASS_CDSetVolume -> BASS_ChannelSetAttributes
+	BASS_CDGetVolume -> BASS_ChannelGetAttributes
+	BASS_ChannelUpdate -> BASS_ChannelSetAttributes
+* Alterations made to
+	BASS_MusicPlayEx
+	BASS_StreamPlay
+	BASS_INFO structure
+
+0.2 - 28/2/1999
+---------------
+* First public release
+
+
+Credits
+=======
+Delphi API - Titus Miloi (titus.a.m@t-online.de)
+VB API - Adam Hoult (admin@daedalusd.com)
+
+
+Bug reports, Suggestions, Comments, Enquiries, etc...
+=====================================================
+If you have any of the aforementioned you can email:
+
+        bass@un4seen.com
+

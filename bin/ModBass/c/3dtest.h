@@ -1,0 +1,19 @@
+#define ID_LIST							10
+#define ID_ADD							11
+#define ID_REMOVE						12
+#define ID_PLAY							13
+#define ID_STOP							14
+#define ID_LEFT							20
+#define ID_RIGHT						21
+#define ID_FRONT						22
+#define ID_BEHIND						23
+#define ID_NONE							24
+#define ID_ROLLOFF						30
+#define ID_DOPPLER						31
+#define ID_EAX							32
+#define ID_A3DON                        33
+#define ID_A3DHF                        34
+#define ID_DISPLAY						50
+
+#define ID_DEVLIST						2001
+#define ID_LOWQUAL						2002

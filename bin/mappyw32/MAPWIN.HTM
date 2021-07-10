@@ -1,0 +1,984 @@
+<html>
+
+<head>
+<title>Mappy - Win32 1.1 documentation</title>
+</head>
+
+<body>
+
+<p><a name="topod"></a></p>
+
+<h2>Mappy - Win32 1.1 documentation</h2>
+
+<p>Index:<br>
+<br>
+&nbsp; <a href="#welcome">Welcome</a><br>
+&nbsp; <a href="#disclaim">Disclaimer</a><br>
+&nbsp; <a href="#features">Features</a><br>
+&nbsp; <a href="#quicks">Quickstart</a><br>
+&nbsp; <a href="#howit">How It Works</a><br>
+&nbsp; <a href="#designc">Design Considerations</a><br>
+<br>
+&nbsp; <a href="#filemenu">The File Menu</a><br>
+&nbsp; <a href="#maped">The Map Editor Window</a><br>
+&nbsp; <a href="#blocked">The Block Editor Window</a><br>
+&nbsp; <a href="#editmenu">The Edit Menu</a><br>
+&nbsp; <a href="#toolmenu">The MapTools Menu</a><br>
+&nbsp; <a href="#brshmenu">The Brushes Menu</a><br>
+&nbsp; <a href="#layrmenu">The Layers Menu</a><br>
+<br>
+&nbsp; <a href="#playlib">The Playback Libraries</a><br>
+&nbsp; <a href="#fmpform">The FMP file format</a><br>
+&nbsp; <a href="#trouble">Troubleshooting</a><br>
+&nbsp; <a href="#hints">Hints and Tips</a><br>
+&nbsp; <a href="#glossary">Glossary</a><br>
+&nbsp; <a href="#vhistory">Version History</a><br>
+</p>
+
+<hr>
+
+<p><a name="welcome"></a></p>
+
+<h3>Welcome</h3>
+
+<p><br>
+&nbsp; Thankyou for using Mappy, hopefully you will find it a
+useful tool in creating your own games. This software is freely
+distributable, and you may use it and the accompanying playback
+libraries freely with no licence, the only restriction is that
+you are not allowed to charge for this editor or the playback
+libraries, or distribute a modified version of this editor
+without the author's consent. You may, of course, use the
+playback libraries and maps you create as you wish. <br>
+<br>
+&nbsp; What is it? Well, I have tried to make the most
+comprehensive and powerful 2D tile map editor about. The idea is
+that you make some graphic 'tiles' of a set size (such as
+32pixels wide by 32pixels high) with some paint package in such a
+way as to be able to put them in a grid so they form a large
+area. You can assign properties to these tiles so that maybe a
+sprite (a graphic on the screen) can't go over certain tiles, or
+maybe goes under one tile, but over another. You can also animate
+tiles and lots more besides. If you don't find Mappy suitable for
+your needs, or have suggestions for it, please <a
+href="mailto:rburrows@bigfoot.com">email me about it</a>.<br>
+<br>
+&nbsp; I have also made several playback libraries available that
+you can incorporate in your games which make display and
+animation of the map easy. These playback libraries are available
+from the Mappy site, and include MappyDX (for DirectX SDK C and
+C++ programmers and CDX users) and MappyAL (for DJGPP/Allegro programmers). <br>
+<br>
+&nbsp; Please take the time to look at this documentation&nbsp;
+If you want to contact me, please email the address shown when
+you select 'About' from the 'Help' menu or the address on the
+Mappy homepage. The current Homepage for Mappy is: <a
+href="http://www.geocities.com/SiliconValley/Vista/7336/robmpy.htm">http://www.geocities.com/SiliconValley/Vista/7336/robmpy.htm</a>
+or <a href="http://www.rbsite.freeserve.co.uk/robmpy.htm">http://www.rbsite.freeserve.co.uk/robmpy.htm</a>
+or if all else fails: <a href="http://surf.to/mappy">http://surf.to/mappy</a></p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="disclaim"></a></p>
+
+<h3>Disclaimer</h3>
+
+<p>&nbsp; This software and associated files are provided 'as is'
+with no warranty or guarantees of any kind, you use them at your
+own risk and in doing so agree that the author is in no way
+liable and cannot be held responsible for any loss of
+time/data/hair or anything else that may occur either directly or
+indirectly from the use of this software or associated files. <br>
+<br>
+&nbsp; Sorry about that, but I don't think it's fair that I get
+sued for something I release for free, just remember to keep
+backups and you'll be fine. I have never lost any data or files
+or had Mappy screw anything up, just be aware that if it does I
+can't be held accountable :) </p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="features"></a></p>
+
+<h3>Features</h3>
+
+<p>Note: These are the features for Mappy Win32 other platforms
+and versions have slight differences in features, but all make
+the same FMP files...<br>
+<br>
+&nbsp; Single FMP file format compatible with all versions of
+Mappy and playback libraries<br>
+&nbsp; Supports 8/15/16/24/32bit colour modes<br>
+&nbsp; Supports all resolutions<br>
+&nbsp; Supports still and animated tiles<br>
+&nbsp; Supports tile sizes of 8*8 upto 128*128, including
+non-square tiles<br>
+&nbsp; 1024 tiles, AND 2048 anims available<br>
+&nbsp; Easy to use interface<br>
+&nbsp; Fill (with still/animated blocks, brush (multi-block) and
+random from brush)<br>
+&nbsp; Zoom (1x, 2x and 4x)<br>
+&nbsp; Hotkeys and keyboard shortcuts, inc pickblock and
+next/prev tile<br>
+&nbsp; New, Cut, Copy and Paste<br>
+&nbsp; Brush an area, then draw with it!<br>
+&nbsp; Various playback libraries to use with your games to load
+and display the FMP map file<br>
+&nbsp; All colourdepths converting (display 8bit maps on 16bit
+screens? no problem)<br>
+&nbsp; Import and Export individual components<br>
+&nbsp; Resize map array with recentering (nice)<br>
+&nbsp; Undo (and Undo-undo :)<br>
+&nbsp; Grid, for easy positioning/tile recognition<br>
+&nbsp; Onion skin transparency<br>
+&nbsp; Tidyup/space functions, gets rid of unused data<br>
+&nbsp; Map information, see exactly how much space things are
+using<br>
+&nbsp; DirectX preview (MappyWin32 will run without DirectX
+except preview), scroll around your animated map on any valid
+DirectX mode (all valid modes for your system are listed),
+includes parallax layer for transparency checking. On my
+relatively lowly 200Mhz K6 I can run my monitor rate of 75fps in
+800*600*16 with all layers and parallax, and the playback lib
+MappyDX is faster yet<br>
+&nbsp; Layers, 4 for each block, 8 in the map including
+transparency and depth.<br>
+&nbsp; Expansive and useful documentation (surely the best
+feature?) </p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="quicks"></a></p>
+
+<h3>Quickstart</h3>
+
+<p>&nbsp; I have not been able to get Mappy to run properly under
+Win3.1 and Win32s and as I don't have this setup I can't really
+do anything about it, sorry, though it works fine under 95, 98
+and NT. You will need your desktop in 15bit colour or higher
+(high or true colour, the more colours the better). Double click
+Mapwin.exe to start it. You will see Mappy open at the default
+640*480, you can resize the windows as you like, also note you
+can specify your own size on startup, see <a href="#hints">Hints
+and Tips</a>. If you just want to try out Mappy and aren't doing
+anything serious yet, you'll find it pretty easy to use. Select
+'Open' from the file menu, or simply press Ctrl+O, you should see
+the file test.fmp, double click it and it will be loaded into the
+map editor.<br>
+<br>
+&nbsp; You should now see the map in the Map Editor (left)
+window, and the still blocks in the Block Editor (right) window.
+If you have a high resolution desktop and the tiles look a bit
+small, select a 'Zoom' from the MapTools menu. Click the left mouse
+button over a block in the Block Editor (right) window, you
+should see a black and white rectangle appear round it,
+indicating it is the active block. Now move the mouse over to the
+Map Editor window and click the left mouse button to place the
+block in the map. You can hold the left button down and move the
+mouse to 'paint' with the block. Try scrolling
+around the map with the cursor (arrow) keys, or using the sliders
+at the right and bottom edges of the Map Editor window. You can
+undo the last action you made by selecting Undo from the Edit
+menu (or simply Ctrl+Z), you can undo your undo by selecting it
+again. If you are having trouble seeing where tiles meet, select
+Grid from the MapTools menu, blocks in the Block Editor window
+will now have an outline, and the block the mouse pointer is over
+will be highlighted in the Map Editor window.<br>
+<br>
+&nbsp; One of Mappy's best features are animated blocks, to see
+them click the right mouse button in the Block Editor window, you
+should see the title of the window change, and any animated
+blocks will be displayed, you can select and use them just like
+still blocks, you can right click again to get back to the still
+blocks. In a new project, there are no animated blocks to start 
+with, you should switch to the animated blocks window, and select 
+'New' from the Edit menu. A handy shortcut is to use the ',' and 
+'.' keys to select 
+the previous/next block and the 'p' key to select the block the
+mouse pointer is currently over in the Map Editor window.
+Although I'm not going to cover this in the quickstart, you can
+double click the left button on a still or animated block in the
+Block Editor window to edit it's properties, try it on both types
+to see the options. You can use any of the options in the Edit
+menu to manage the blocks, normally you would do this before
+drawing the map area, although Mappy does try to be 'smart' in
+minimizing unwanted alterations to the map.<br>
+<br>
+&nbsp; Now let's try something a bit more advanced, select Brush
+#1 from the Brushes menu (you will see it has a tick, or check
+mark next to it when you select it), then the Grab Brush option
+from the same menu (Ctrl+B) now position your mouse over the
+corner of the area you want to brush in the Map Editor window.
+Click the left mouse button and hold it down and move the mouse
+to the opposite corner of the area you want to grab, you should
+see a 'bounding box' indicating the area. When you have the area
+you want selected, release the left mouse button. You can now
+paste that brush anywhere you like with the left button (the
+brush will not be pasted if part of it would go off the edge of
+the map) the top left of the brush will be at the mouse pointer.
+Note that any 'block 0' blocks in the brush will be treated as
+transparent so you can have non-rectangular brushes. You can also
+use brushes for filling, find an area with a number of identical
+blocks next to each other (the black areas are good), place the
+mouse pointer over the 'starting block' and press the 'f' key,
+that area will now be filled with the brush, over and over with
+the top left of the brush where the mouse pointer is, try it and
+see. Undo the fill with Ctrl+Z, now do the same, but press
+Ctrl+F, the area will be filled with random blocks from the
+brush.<br>
+<br>
+&nbsp; You can try out the other features as you like (especially
+the rather cool Anim Preview from the MapTools menu), when you
+decide to do a map you want to use, please read the rest of this
+documentation, it contains many more details such as design
+considerations, layers and transparency. I'd really like to hear
+what you thought of Mappy, please email me your comments, good or
+bad, <a href="mailto:rburrows@bigfoot.com">Robin Burrows</a></p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="howit"></a></p>
+
+<h3>How It Works</h3>
+
+<p>&nbsp; I have designed Mappy to hopefully be expandable,
+produce small mapfiles with lots of features, and most
+importantly be fast and easy to playback. The FMP format (how the
+maps are stored) is a 'chunk' based format which allows all the
+information for the map (graphics, array, anims, block data etc)
+to be stored in a single file, you can also add your own chunks
+to this file if you want, more details in <a href="#fmpform">FMP
+file format</a>.The <a href="#playlib">playback libraries</a>
+then provide functions to load and play the map within your game.<br>
+<br>
+&nbsp; The map editor comes in several versions, this
+documentation is concerned with the Win32 version. To make a map
+from scratch, you will need to make, or get some 'tile graphics'
+(if you don't know what some of these terms mean, see the <a
+href="#glossary">glossary</a>) in uncompressed BMP format and
+import them into a map (see next section). It is important to be
+aware of the hierarchy of the objects within Mappy, you have the
+top level which is the <font color="#FF0000">Map Array</font>
+(this is shown in the Map Editor window), the elements in that
+are short int offsets to either <font color="#FF0000">Block
+Structures</font> if they are positive, or <font color="#FF0000">Anim
+Structures </font>if they are negative, <font color="#FF0000">Anim
+Structures</font> contain offsets to <font color="#FF0000">Block
+Structures</font>, <font color="#FF0000">Block Structures</font>
+have 4 offsets to the <font color="#FF0000">Graphics Blocks</font>
+(amongst other things).</p>
+
+<p>MapArray ------&gt; Block Structures --------&gt; Graphics Blocks<br>
+......\............................/<br>
+........\Anim Structures/</p>
+
+<p>&nbsp; That's about as much as you need to know if you don't
+intend adding your own objects, linked lists etc and are going to
+use the playback libraries.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="designc"></a></p>
+
+<h3>Design Considerations</h3>
+
+<p>&nbsp; Before spending hours on a huge project it is important
+to think about various aspects of it, what size are the tiles
+going to be? What resolution(s) and colour depth(s) is the game
+going to run in? What sort of view is it going to have (overhead,
+side, oblique, isometric)? How are the other game objects going
+to interact with the map? If you haven't done many tile based
+games before, it may be best to do a very simple pacman or
+shootemup project, just to get the hang of things, <font
+color="#FF0000">design is everything</font>.<br>
+<br>
+&nbsp; Tile size is one of the most important things to consider,
+currently there is no way from the editor to pick a different
+size than the one you choose from 'New Map' (though you can
+resize the map array to make it bigger or smaller). Colour depth
+also cannot be changed once set, though you could process the FMP
+file yourself to change tilesize and depth, you could also email
+me to request it for a future Mappy version. I would recommend
+that the width of the tile is a multiple of 4 (better memory
+alignment), try 16pixels wide by 16pixels high for low res games
+(320*240, 320*200) or 32*32pixels for 640*480 screen resolutions.<br>
+<br>
+&nbsp; Remember that computers are advancing all the time, try to
+support multiple colour depths and resolutions (if you think it's
+worth it), also consider doing your map in 24bit colour even if
+you are aiming for a 16bit screen, with an option to select any
+high colour depth, MappyDX supports colour conversion, check the
+docs for the other libs, of course, 24bit colour uses more disk
+space than 16bit. If you are aiming for a lowspec machine with a
+low resolution (such as VGA 320*200) use the Zoom option to get a
+better idea of the graphic size in Mappy, also if you know you
+aren't going to be able to access the video acceleration on the
+videocard (for example using VESA under DOS) bear in mind there
+will be a huge performance hit (the Anim Preview in MappyWin32
+uses DirectDraw blitter acceleration found on almost all graphic
+cards)...<br>
+<br>
+&nbsp; The FMP file is ready to use from the first time you save
+it, so it makes sense to develop your game code at the same time
+as the map so you can see how things work and how fast they go,
+also remember to adjust the preview setup in MappyWin32 to the
+screen res. you are going to use...<br>
+<br>
+&nbsp; When making your graphics for tiles, use a picturesize
+that is a multiple of the tilesize, for example 32*32 and 16*16
+tiles fit nicely on a 640*480 or 320*240 picture. To import them
+into Mappy they will need to be lined up in a grid (export the
+tiles from the example map as a BMP and load them into a paint
+package to see how to do it, completely black tiles are ignored).</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="filemenu"></a></p>
+
+<h3>The File Menu</h3>
+
+<p>&nbsp; This has the standard file features such as Open (open
+a .FMP mapfile for editing), Save (saves current .FMP file under
+it's current name, if it hasn't been named this is the same as
+Save As), Save As (requests a name to save the map, .FMP will be
+added if you don't type it in then saves it), Exit (quits Mappy,
+same as clicking the cross gadget in the window titlebar, you
+will be warned if you have modified a map but not saved it), and
+some Mappy specfic ones, which are:<br>
+<br>
+&nbsp; New Map. Brings up the new map dialogue where you choose
+settings for the new map, you should have carefully decided on
+the values you enter here (see <a href="#designc">Design
+Considerations</a>). Either the default values will be shown, or
+the values for the currently loaded map (currently loaded map
+will be cleared from memory if you OK from New Map), you can
+modify these values to any legal value, the first number (tile
+width) should be a multiple of 4pixels (8bit) or 2pixels(other
+depths). You can change the colour depth by clicking the
+displayed one and selecting a new one from the dropdown list.
+Note: Your Windows desktop doesn't need to be in, or support,
+that depth, your Windows desktop does need to be in high or true
+colour though (yes, even for 8bit maps :). The only values that
+can currently be changed after creating the map are the map width
+and height via Resize. When you 'OK' you will be given a map
+filled with one block (shown in the Block Editor 'still' window)
+this is a special block, you can edit it's properties (by double
+clicking) but not give it any graphics or delete or move it from
+the first position. Now may be a good time to check 'Map
+Information' in MapTools to see how much space is being taken up.<br>
+<br>
+&nbsp; Import. This is used to get your tile graphics into your
+map, at the moment it only supports uncompressed BMP files, if
+you have an 8bit map you can only import 8bit BMP files (and the
+colour palette will be taken from the most recently imported
+one), in other depths you can import both 8 and 24bit
+uncompressed BMP files. There are plenty of conversion utilities
+out there if you are using a different picture format. You can
+import more than one BMP file, when you have selected the BMP
+file to import, you will get the question: &quot;Make all
+imported graphics into NEW block structures?&quot; If you answer
+'Yes' new blocks will be created in the Block Editor 'still'
+window that have each new graphic tile as the BG (see Block
+Structures in the <a href="#glossary">glossary</a>), if you
+answer 'No' you will be asked: &quot;Replace existing
+graphics?&quot;. Answering 'Yes' to that will write over the
+current map graphics (except the special first one), the most
+common reason to do that is when you have exported the existing
+graphics and modified them, and want to update the map graphics.
+If you say 'No' to replacing existing graphics the new ones will
+be added to the map, but won't be visible until you incorporate
+them into a Block Structure.<br>
+&nbsp; You can also import Map Array layers (click the 'Files 
+of type' arrow in the file requestor). These MUST have been 
+previously exported from this map, and you must not have altered 
+the blocks.<br>
+<br>
+&nbsp; Export. You can export individual parts of the map as
+separate files, which you may need for various reasons, though
+the playback libs use the FMP files. There are five checkboxes,
+click them to indicate you want to export that particular item
+(they will be given the same name and be put in the same
+directory as the map file, so if your map was called test.fmp,
+the colour map would be exported as test.cma <font
+color="#FF0000">any file with that name will be overwritten!</font>).
+The colour map is exported as a 768 byte file containing
+256*3byte values of 0xRRGGBB, this is the same as the CMAP chunk
+of the FMP file. The Anim and Block data is exported as a long
+int offset to the split between the anim and block structures
+then the anim info, then the block structures. The map array is
+simply an array of short ints mapwidth wide by mapheight high, so
+a 100*100 map would produce a 20000byte .MAR. Block Graphics
+(.GFX) are all the raw blockgraphics one after the other, so
+that's blockwidth*(blockdepth/8)*blockheight*numblockgfx.Block
+Graphics (.BMP) is a standard uncompressed BMP file in 8bit (if
+the mapdepth is 8bit) or 24bit for any other depth, you can
+specify how many blocks per row and this will affect the shape of
+the BMP file, this is useful for modifying the graphics, then
+re-importing them.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="maped"></a></p>
+
+<h3>The Map Editor Window</h3>
+
+<p>&nbsp; This will show how the map is layed out, and allow you
+to edit that layout. Simply select a block, anim, or brush and
+paint with it by clicking the left mouse button on the square
+where you want to place the tile, you can alter more than one
+square by holding down the left mouse button and moving the
+mouse. You can fill an area of blocks with either a still
+block, anim block or brush (depending on what is currently
+selected as your drawing item) by pressing the 'f' key (make sure
+caps lock isn't on) when the mouse button is over the block you
+want to start the fill with. You can also fill randomly from a
+brush with Ctrl+F, you can weight blocks by having more than one
+in a brush (try and see, you can undo a fill with Undo, Ctrl+Z).
+Another handy shortcut is to press the 'p' key while the mouse
+pointer is over the block you want to pick in the Map Editor
+window, this will now be your current block/anim. You can select
+the next/previous block/anim by pressing the ',' and '.' keys.<br>
+<br>
+&nbsp; You can move the area seen in the Map Editor window by
+either using the scrollbars on the right and bottom edges of that
+window, or by pressing the arrow (cursor) keys, hold them down to
+scroll along. When you get to the right or bottom edges of the
+map you will see a grey area which cannot be modified.<br>
+<br>
+&nbsp; Information about the block under the mouse pointer is 
+given in the window title bar, T=1 means transparency is set 
+for that block.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="blocked"></a></p>
+
+<h3>The Block Editor Window</h3>
+
+<p>&nbsp; This shows all the still and animated blocks that have
+been created, you can toggle between the still and animated
+screens by right clicking the mouse over the Block Editor window.
+To select a block or anim, left click the mouse button on it, you
+can now draw with it in the Map Editor window. Remember to turn
+the grid on (Ctrl+G) if you have trouble telling where the block
+boundaries are. You can add a new block/anim, cut copy and paste
+(all in the Edit menu), new and paste put the block after the
+currently selected one. Note that cutting a block will remove any
+references to it from the map array (they will be replaced with a
+reference to block 0), and pasting it will not put them back, so
+it's usually best not to cut blocks you are using in the map
+array. Also note that cutting a block does not remove the
+graphics it was using. Undo does not work when editing the Block
+Editor.<br>
+<br>
+&nbsp; You can see more blocks/anims by scrolling up and down
+with the scrollbar on the right of the Block Editor window.<br>
+<br>
+&nbsp; To edit a block structure, double click it in the Block
+Editor indow.Depending on whether it is a still or animated
+block, you will be shown a dialogue giving details about it and
+allowing you to change it.<br>
+<br>
+&nbsp; Editing Properties of a Still Block.You will be shown the
+block you double clicked, along with it's properties. The numeric
+information is not used by Mappy and is entirely for your own
+use, as are the four collision detection bits. Of the Other bits,
+the top left of them indicates whether transparency is taken into
+account (you will nearly always check that in block 0 if you plan
+to use transparency, as well as any blocks that have a
+transparent colour in them). In the bottom left, you will see the
+four layers of graphics that make up the block's appearance,
+simply click them to pick a new graphic, BG is used as the back
+layer, you will probably only want to use the first FG layer,
+this allows you to draw the map in layers in the playback
+libraries, sandwiching sprites between them to give depth. You
+can go to the next/previous block by clicking the arrows next to
+the OK button.<br>
+<br>
+&nbsp; Editing Properties of an Animated Block. Double clicking
+an animated block in the Block Editor window brings up this
+dialogue. Animated blocks are made up of a sequence of still
+blocks, you do not pick graphics when you edit them, but still
+block structures. The reference block is how the anim appears
+when it is not animating (such as in the Block and Map Editor
+windows), click it to change. Below that is the sequence of still
+blocks, there is a black and white 'C' shape indicating where
+frames will be inserted and deleted, simply click where you want
+to insert or cut, then click the Insert or Cut buttons. Clicking
+Insert will take you to another dialogue where you can pick up to
+30 frames to insert (you can have more than 30 frames in an
+animation, just click insert again). When you OK, you are
+returned and the new frames will be shown, with the edit point
+'C' cursor at the end of the new frames. The Delay is the number
+of calls to UpdateAnims before the next frame is used, so the
+higher it is the slower it will animate, the actual speed is
+determined by how often you call UpdateAnims (a playback library
+function), you can get a rough idea with Anim Preview from the
+MapTools menu. To the right of Delay is the style of animation,
+click to change, LOOPF continually loops forward, ONCE only plays
+the anim once (this is so your game can trigger an event), PP
+pingpongs between the start and end frame via the middle ones.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="editmenu"></a></p>
+
+<h3>The Edit Menu</h3>
+
+<p>&nbsp; This contains New, Cut, Copy and Paste for use with the
+blocks in the Block Editor window (see 
+<a href="#blocked">Block Editor</a> for how those work). 
+Resize, which allows 
+you to resize the map array of all layers. Before resizing it is
+advisable to save the map as you can't Undo it (though you can
+resize back to the original size). The Resize dialogue shows 9
+buttons on the right which show which edges rows and columns will
+be removed/added to, be sure that the Map Centering text at the
+top shows the correct number (the default is 5, rows and columns
+will be added/removed equally from all sides to make the new size
+map). If you select centering as '1' (top left), columns will be
+added/removed from the right and bottom edges. Select the new
+size by entering the numbers in the width and height boxes, then
+OK to resize, or Cancel to keep the old size.<br>
+<br>
+&nbsp; Undo is very useful, but doesn't work on everything, it
+will undo everything since the last left mouse click in the Map
+Editor window (including the area you can't see), especially
+useful for undoing Fill or when you 'paint' by holding the
+mousebutton down.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="toolmenu"></a></p>
+
+<h3>The MapTools Menu</h3>
+
+<p>&nbsp; There are all sorts of goodies in here, the first is
+Map Information. This allows you to put your name and a 3 line
+description of the map, the length of each line is limited to 68
+characters, this information is saved in the FMP file. Below is
+how much memory each type of object is using in the map along
+with the total space used for those objects.<br>
+<br>
+&nbsp; There are then two options for previewing the map in
+DirectX, you must have DirectX3 or greater installed to use this.
+First, choose Preview Setup. Select the screenmode you want to
+use from the list, these are reported by DirectX so only valid
+ones are shown, it defaults to 640*480 *bpp ?hz which is
+640pixels wide, 480 high, bpp is the depth of the map and the
+default refresh rate for that mode, pick whichever you like,
+preferably the one your game is going to run in, beware that
+running excessively high resolution modes on monitors not
+designed for that mode may damage the monitor. Check the boxes
+below for which block layers are drawn (the default is background
+(BG) with the first foreground layer). Below are the transparency
+options, check the box to enable transparency on the preview, if
+you want a parallax layer (very handy for checking proper
+transparency) enter the number of the GRAPHIC (this may not be
+the same as the block number, 0 will be plain black or colour 0,
+you can see what the graphic numbers are by editing a still
+block, clicking on the BG image and looking at the list) this
+will be repeated over and over in any transparent regions
+(remember to check the transparency box, the top left box of
+Other in the Block properties editor) and move at half the speed
+of the other layers creating a rather lovely effect. The next two
+boxes you only need to fill in the one which relates to the
+DirectX depth you are using. 8bit is simple enough, that's the
+colour index that is drawn as transparent, for other depths a
+24bit RGB value is entered, this will be translated to the depth 
+you are using and defaults to the value in the .ini file. 
+There is one small 'feature' here, if you have a colour like
+FF00FF as transparent (R=255, G=0, B=255) and you are showing a
+16bit map on a 24 or 32bit screen you will need to modify it to only
+5bits (F800F8). When you have OK'd the setup, it will remain in
+effect until you change it or exit Mappy, and be used when you
+select Anim Preview (DirectX) from the menu, this allows you to
+scroll around the map (starting at the point where the Map Editor
+window is currently viewing) and see the animated blocks, er,
+animating as well as the transparency. There is also a box 
+specifying the logic rate, leave this at 0 if you want the logic 
+to match the monitor refresh rate, or specify your own. If you are 
+making a game you usually can't rely on the refresh rate of the 
+monitor to regulate speed as it varies (so speed will vary on 
+different machines). Most games update internally at a set rate 
+(try 100fps) which unfortunately leads to jerkier movement but 
+at least the speed is the same on all machines.<br>
+<br>
+&nbsp; Range Edit Blocks allows you to selectively adjust a set 
+range of block structures. This is particularly useful for 
+making blocks foreground/transparency blocks. It is simple to 
+use, type the numbers for the start and end of the range of blocks 
+you want to alter, then adjust ONLY the things you want to change. 
+If any of the checkboxes are greyed out, or the user fields are 
+completely blank the information in each block will be left 
+unaltered. For more information on these fields, see 
+<a href="#blocked">Block Editor</a>.<br>
+<br>
+&nbsp; The Remove unwanted options are handy when you have
+completed a map and want to reduce it's size. Make sure you have
+a backup! If you select remove anims, any anims that aren't used
+in the map will be removed, this probably won't save much space
+on its own, but when you remove graphics you could save a lot
+more, be careful, if you have made an anim sequence that is
+inserted into the map in realtime by your game, it will still be
+deleted if it is not in the map. Remove blocks removes any block
+structures not used by the map array or anim sequences. Remove
+graphics removes any raw graphics not used by block structures,
+this will make the biggest saving if you do these processes in
+the order just described. To check these savings, view Map
+Information before and after doing this.<br>
+<br>
+&nbsp; Grid and Zoom have already been described in other
+sections. When Grid is checked, blocks in the Block Editor window
+have an edge round them, and the block under the mouse pointer is
+highlighted in the Map Editor window. Zoom shows things at normal
+size when Zoom x 1, twice normal at Zoom x 2, and four times 
+normal size at Zoom x 4.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="brshmenu"></a></p>
+
+<h3>The Brushes Menu</h3>
+
+<p>&nbsp; Often you will have 'objects' that consist of several
+blocks, maybe a house or road or something, there is an easy way
+to put these in. First, put the blocks in the Map Editor as they
+are supposed to be layed out, then select a brush from the
+Brushes menu (it will then have a checkmark next to it), and
+select Grab Brush or press Ctrl+B, move the mouse pointer over
+one corner of the object you want to pick up as a brush, then
+hold down the left mouse button and move the mouse pointer to the
+opposite corner, you will see a bounding box as you do this.
+Release the left mouse button to finish picking the brush. Now
+you will be able to paste the whole object anywhere on the map
+with a single click, the block the mouse pointer is over will be
+the top left block of the brush you are pasting. You can reselect
+the brush at any time by selecting it from the Brushes menu, they
+are also saved with the map so you can use them when you load it
+next time (but be aware that it may not be on the same number,
+blank brushes aren't saved, and when brushes are loaded they are
+put in the first free number, if you save a file with only Brush
+#6, it will be loaded as Brush #1). You can Fill with a brush as
+well, either tiling, or randomly, see <a href="#maped">Map Editor
+Window</a>. If you want to save a bit of space (and it will be a
+very small amount) choose the Destroy All Brushes option.<br>
+<br>
+&nbsp; Grab brush from block sequence allows you to make a brush 
+from consecutive block structures without having to get them 
+from the map.<br>
+<br>
+&nbsp; Disabling the brush transparency means that block 0 parts 
+of the brush will overwrite when pasted rather than not 
+affecting the map.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="layrmenu"></a></p>
+
+<h3>The Layers Menu</h3>
+
+<p>&nbsp; There are two different layer systems in Mappy, one is
+Block Layers, which are the four layers associated with Block
+Structures, the other is Map Layers, which is what this menu
+manipulates. Map Layers are identical in size and shape to the
+numbers you specified in New Map's map width and map height. The
+idea is you can use a layer for games objects (like pickup items)
+or perhaps changes in a level when a lever is pulled in the game.
+The options in this menu are fairly self explanatory. If you just
+want to do a load of levels for a game with the same graphics and
+blocks, you can export the map array (the current layer) and this
+will be much smaller than a whole .FMP file.<br>
+<br>
+&nbsp; Note you can export and import layers as .MAR files, but 
+the map you are working on MUST have identical blocks and be the 
+same size. This is handy if you are doing a 100 level game as 
+Mappy only handles 8 layers internally.<br>
+<br>
+&nbsp; The onion skin option allows you to see transparently 
+through a layer to one other selected layer. It's best to keep this 
+feature off if you aren't using it. The current layer (ie the one 
+which has the tick next to it in the layers menu) is the top 
+layer which will be the one altered. The background layer is 
+selectable in the Onion Skin dialogue and will be shown behind 
+the current layer, you can optionally make this appear darker so 
+the current layer stands out more. The background layer is drawn 
+as a guide and will not be altered when you are editing the 
+current layer. Remember to switch it off when you've finished, 
+and selecting a layer that doesn't exist for the background is 
+not advisable :) Loading a map will switch off onion skin.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="playlib"></a></p>
+
+<h3>The Playback Libraries</h3>
+
+<p>&nbsp; A large part of Mappy are the playback libraries, these
+allow you to easily load, manipulate, display, animate and scroll
+maps help in .FMP files with a few simple function calls. You can
+get these from the Mappy Homepage, all source is supplied so you
+can modify them as you like. At the time of writing, there are
+MappyDX, for C++ compilers with the DirectX SDK, this editor uses
+a modified version for its Anim Preview, and MappyAL (older
+versions were called MappyPB). You do not have to use these
+libraries, you could write your own, but they are very
+convenient, and MappyDX is pretty fast, too.</p>
+<p>&nbsp; The playback libraries are also an excellent way to add 
+more abilities to the editor. For example, you could build a sprite 
+editor onto them for your game.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="fmpform"></a></p>
+
+<h3>The FMP file format</h3>
+
+<p>The first 12 bytes are as follows:<br>
+4bytes ASCII = 'FORM'<br>
+long int = size of file less header (which is filesize-8)<br>
+4bytes ASCII = 'FMAP'<br>
+
+NOTE: The chunk size long ints like the one above are stored in 'Motorola' 
+format, NOT Intel. You will have to byteswap to get the correct value, ie: 
+Bytes 1,2,3,4 need to become 4,3,2,1.<br><br>
+
+The chunks in the file follow on one after the other, and consist of an 8byte 
+header, and the information specific to that chunk. See how the playback source reads 
+in the information. The chunks can be in any order, and some chunks may not 
+be used in a particular file.<br><br>
+
+Chunk header:<br>
+4bytes ASCII = ChunkID (example: 'MPHD')<br>
+long int = size of chunk data less header<br><br>
+
+These are the chunks as of V1.1:<br>
+ATHR - Up to 4 ASCII strings of author information, separated by 0 values,
+       always an even size.<br>
+MPHD - Map header, see struct in mappy.c<br>
+EDHD - Editor information, see struct in mappy.c<br>
+CMAP - Colour palette for 8bit maps, red byte, green byte, blue byte for
+       however many colours are needed (so usually 256*3 bytes).<br>
+BKDT - Block data. Contains BLKSTR structures for however many block
+       structures were made.<br>
+ANDT - Animation data. Contains ANISTR structures for however many
+       animation structures were made, and also animation data.<br>
+BGFX - The raw graphics in whatever format the map is in. Examples: 8bit:
+       mapwidth*mapheight bytes per block, in forward format *numblocks
+       16bit: mapwidth*mapheight*2 bytes per block, each word contains
+       5 bits red, 6 bits green, 5 bits blue.<br>
+BODY - An array of short ints containing positive offsets into BKDT, and
+       negative offsets into ANDT.<br>
+LYR? - Where ? is an ASCII number form 1 to 7. These are the same size and
+       format as BODY, and allow object layers to be used.<br>
+You can add your own chunks to a map file, if you load it into mappy, 
+when you save it, those additional chunks will be saved in the file, but 
+not necessarily in the same place as before.
+</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="trouble"></a></p>
+
+<h3>Troubleshooting</h3>
+
+<p>&nbsp; You import more graphics, but the colours change and
+appear wrong in 8bit. This is due to using different colour
+palettes.<br>
+&nbsp; You have a high/true colour map, but the transparency colour 
+isn't transparent. Change the transred, green, and blue values in 
+the MAPWIN.INI file with notepad to the correct values.<br>
+&nbsp; Mappy appears to be working, but no graphics appear
+anywhere. I noticed this on Win3.1 with Win32s, don't know why,
+if it happens to you email me about it.<br>
+&nbsp; Something appears to be wrong with the FMP file you made.
+email it to me and I'll take a look.<br>
+&nbsp; Transparency doesn't seem to work in the Anim Preview.
+Make sure you have the transparency box checked and the correct
+index/colour value is shown, also make sure blocks with
+transparent colours have the topleft box of the Other boxes
+checked under Block Properties.<br>
+&nbsp; The anim preview seems jerky/slow. This could be due to 
+a number of things, poor DirectX drivers for your card, some 
+windows background application hogging your CPU time or just 
+trying to do too much. The preview is just that, it's to give 
+a rough idea of how the map will look. It is worth noting that 
+the example map, test.fmp, uses 16*16 blocks which are fairly 
+inefficient for 640*480 or higher resolutions, 32*32 block 
+maps should give much better results in 640*480.<br>
+&nbsp; The map editor always starts in 640*480 and it's a pain to
+resize the windows every time. See the following hints and tips
+section.<br>
+&nbsp; You can't use the exported files in the playback libs,
+only the FMP ones, if you want to use exported components you'll
+have to write some additional functions.<br>
+&nbsp; The colours look all wrong in the Anim Preview. Try not to
+display high colour maps on an 8bit screen, you can do it in the
+playback libs, but no palette is set in Anim Preview.</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="hints"></a></p>
+
+<h3>Hints and Tips</h3>
+
+<p>&nbsp; Edit the file called MAPWIN.INI that's in the same
+directory as Mappy with NotePad. Change the numbers to suit. The 
+transred etc are 0-255 and are the colour used for transparent 
+you can change these to any legal value. grid should be 0 for off 
+and 1 for on, zoom should be 1,2 or 4. width and height are the 
+starting dimensions of MappyWin32.<br>
+&nbsp; Don't have absolutely huge maps, a 1000*1000 block map
+with tiles of 32*32 pixels is stupidly big, and uses 2Mb of
+memory for each Map Layer, plus it will take forever for you to
+make it :)<br>
+&nbsp; Please read the documentation, see how big it is? It's not
+all waffle. In particular read the <a href="#designc">Design
+Considerations</a> part.<br>
+&nbsp; Please let me know about your projects you are making with
+Mappy, I'm interested to see how it is used.<br>
+&nbsp; Hmmm, need some more tips really, want to add some?</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="glossary"></a></p>
+
+<h3>Glossary</h3>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; <strong>Anim Structure</strong> a 16 byte structure and
+associated list of frames (Block Structure offsets) of unknown
+length<br>
+&nbsp; <strong>Block</strong> I have tried to make 'block' mean
+the block structures for this documentation<br>
+&nbsp; <strong>Block Editor </strong>The window that allows you
+to select and edit both still and animated blocks. Right clicking
+the mouse on it toggles between still/animated<br>
+&nbsp; <strong>Block Structure</strong>&nbsp;a 32 bytes structure
+that acts as information about a particular block, it is
+referenced by the Map Array and Anim Structures, and in turn
+references the raw Tile Graphics<br>
+&nbsp; <strong>BMP</strong> Standard Windows graphic file format,
+MappyWin32 only imports and exports 8bit and 24bit uncompressed
+versions (Other colour depths are imported/exported as 24bit)
+currently<br>
+&nbsp; <strong>FMP</strong> Flexible MaP format, a collection of
+all the information needed to render and animate a map for a
+game.<br>
+&nbsp; <strong>Graphics Blocks</strong> See 'Tile'<br>
+&nbsp; <strong>Map Array</strong> an array of short int (16bit)
+values&nbsp;that reference Block Structures (when positive) and
+Anim Structures (when negative). There can be up to 8 layers of
+this array by using the Map Layers<br>
+&nbsp; <strong>Map Editor </strong>The window where you fill in
+the map array using the various tools provided<br>
+&nbsp; <strong>Map Layers</strong> There can be up to 8 layers of
+the map array for objects, ingame changes, etc. Normally you
+would only have 1 or 2 layers. These can be selected and changed
+in the Playback Libraries<br>
+&nbsp; <strong>Mappy</strong> A 2D tile map editor with lots of
+features, this is the Win32 version but there is also a DOS and
+WinAllegro version<br>
+&nbsp; <strong>Playback Library</strong> these are available
+separately for free at the Mappy homepage, there are several
+versions for different platforms, they provide an easy way to
+access the map in your game<br>
+&nbsp; <strong>Tile</strong> I have tried to make 'tile' mean the
+raw graphics the block structures use for this documentation<br>
+&nbsp; <strong>Tile Graphics</strong> All the graphics
+information for the map</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p><a name="vhistory"></a></p>
+
+<h3>Version History</h3>
+
+<p>&nbsp;<strong>1.1</strong><br>
+Expanded max number of graphics for anim preview (now 4096)<br>
+Fixed outline when grabbing a brush in zoom mode<br>
+Upped graphics buffer from 2Mb to 4Mb<br>
+Added a few options to do with brushes<br>
+Tidied up display functions to cope with non-multiple of 4 graphics<br>
+Added more information to map window titlebar<br>
+Block Editor window now displays more than one column of blocks<br>
+</p>
+
+<p>&nbsp;<strong>1.0</strong><br>
+Finally got rid of the bug that meant if you clicked LMButton in Mappy, 
+but released it outside the window it wasn't detected and stayed on<br>
+Added Range Edit Blocks to MapTools (apply changes to many blocks at once)<br>
+Added Clear Layer function to Layers<br>
+Added Import At function to File<br>
+Added ability to re-import .MAR files<br>
+Added Logic FPS setting to anim preview<br>
+You can now import Map Arrays (.MAR) with Import<br>
+</p>
+
+<p>&nbsp;<strong>1.0BETA3</strong><br>
+Have altered menus and dialogues to be more 'Windows-like'<br>
+Loading and saving now preserves unknown chunks<br>
+Improved documentation about 'edit menu'<br>
+Onion Skin feature (see <a href="#layrmenu">Layers Menu</a>)<br>
+</p>
+<p>&nbsp;<strong>1.0BETA2</strong><br>
+Altered info in 'About' box<br>
+Import now warns of incorrect bitdepth<br>
+You can now undo after using arrow keys<br>
+Menu functions now don't crash when no map is loaded<br>
+High/TrueColour transparency colour is now selectable via .ini file<br>
+4x Zoom added<br>
+You can now associate .FMP files with Mappy and double click them to start<br>
+DirectX preview now works properly in High/TrueColour<br>
+DirectX Preview colour depth default is the depth of the map<br>
+Fixed Map Information, Layers were being ignored<br>
+</p>
+
+<p><a href="#topod">(top of doc)</a> </p>
+
+<hr>
+
+<p>This documentation is for Mappy Win32 version V1.1 by <a
+href="mailto:rburrows@bigfoot.com">Robin Burrows</a> 02/07/1999.</p>
+
+<p><a href="http://www.geocities.com/SiliconValley/Vista/7336">Homepage
+1</a> - <a href="http://www.rbsite.freeserve.co.uk">Homepage 2</a></p>
+</body>
+</html>
